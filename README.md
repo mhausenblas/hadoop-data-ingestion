@@ -203,6 +203,9 @@ To view the relevant logs live, use `tail -f`:
 	tail -f /Users/mhausenblas2/bin/hadoop-1.0.4/logs/hadoop-mhausenblas2-namenode-Michaels-MacBook-Pro-2.local.log
 	tail -f /Users/mhausenblas2/bin/hadoop-1.0.4/logs/hadoop-mhausenblas2-datanode-Michaels-MacBook-Pro-2.local.log
 
+To view the status and health of the HDFS, point your browser to:
+[http://localhost:50070/dfshealth.jsp](http://localhost:50070/dfshealth.jsp)
+
 Some common HDFS commands used throughout: 
 
 	hadoop fs -ls /michael
