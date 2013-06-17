@@ -36,16 +36,17 @@ compatible access.
 If you have a file, such as a CSV file, in your local filesystem and want to
 copy it to HDFS use `hadoop fs -copyFromLocal` like so:
 
-	hadoop fs -copyFromLocal /user/michael/data.csv /mhausenblas/data.csv
+	$ hadoop fs -copyFromLocal /user/michael/data.csv /mhausenblas/cli-data.csv
 
 [documentation][HC] | [Stack Overflow][S1]
 
 ----
 
-If you prefer a RESTful interaction, there is the WebHDFS REST API available.
+If you prefer a RESTful interaction, there is the [WebHDFS REST API][HW]
+available. This API, available since Hadoop 0.20.205, must be enabled in 
+other to use it. 
 
-This API, available since Hadoop 0.20.205, must be enabled in other to use it.
-If not yet enabled, edit `hdfs_site.xml` to change this:
+First, if WebHDFS is not yet enabled, edit `hdfs_site.xml` to change this:
 
 	<property>
 	 <name>dfs.webhdfs.enabled</name>
@@ -53,15 +54,93 @@ If not yet enabled, edit `hdfs_site.xml` to change this:
 	</property>
 
 Then, you can use for example `curl` to interaction with the WebHDFS API from
-the shell:
+the shell. Let's first check if the CSV file we've uploaded in the previous
+step using the CLI actually is available (the `-s` tells `curl` to be silent):
 	
+	$ curl -s GET "http://localhost:50070/webhdfs/v1/michael/cli-data.csv?op=GETFILESTATUS"
+	{
+	    "FileStatus": {
+	        "accessTime": 1371472189412,
+	        "blockSize": 67108864,
+	        "group": "supergroup",
+	        "length": 52,
+	        "modificationTime": 1371472189412,
+	        "owner": "mhausenblas2",
+	        "pathSuffix": "",
+	        "permission": "644",
+	        "replication": 1,
+	        "type": "FILE"
+	    }
+	}
+
+OK, this looks fine. Now let's create a second copy of the CSV file in HDFS,
+this time we call it `rest-data.csv` (note the `-v` here, we ask `curl` to
+be chatty this time as we want to see exactly what is happening):
 	
-	curl -i GET "http://localhost:50070/webhdfs/v1/michael?op=GETHOMEDIRECTORY"
-	
-	curl -i -X PUT "http://localhost:50070/webhdfs/v1/michael/data.csv?op=CREATE"
+	$ curl -v -X PUT "http://localhost:50070/webhdfs/v1/michael/rest-data.csv?op=CREATE"
+	* About to connect() to localhost port 50070 (#0)
+	*   Trying ::1...
+	* connected
+	* Connected to localhost (::1) port 50070 (#0)
+	> PUT /webhdfs/v1/michael/rest-data.csv?op=CREATE HTTP/1.1
+	> User-Agent: curl/7.24.0 (x86_64-apple-darwin12.0) libcurl/7.24.0 OpenSSL/0.9.8x zlib/1.2.5
+	> Host: localhost:50070
+	> Accept: */*
+	>
+	< HTTP/1.1 307 TEMPORARY_REDIRECT
+	< Content-Type: application/octet-stream
+	< Location: http://10.196.2.36:50075/webhdfs/v1/michael/rest-data.csv?op=CREATE&overwrite=false
+	< Content-Length: 0
+	< Server: Jetty(6.1.26)
+	<
+	* Connection #0 to host localhost left intact
+	* Closing connection #0
+
+So, the namenode confirms our attempt to create the file and internally makes
+sure the metadata is provisioned. Then, the API redirects us - the 
+[307 response code](http://tools.ietf.org/html/rfc2616#section-10.3.8) -
+to a datanode where the file is to be written. So, in a second step we can now 
+actually write the file to the location specified in the previous HTTP response:
+
+	$ curl -v -X PUT -T data.csv "http://10.196.2.36:50075/webhdfs/v1/michael/rest-data.csv?op=CREATE&user.name=mhausenblas2"
+	* About to connect() to 10.196.2.36 port 50075 (#0)
+	*   Trying 10.196.2.36...
+	* connected
+	* Connected to 10.196.2.36 (10.196.2.36) port 50075 (#0)
+	> PUT /webhdfs/v1/michael/rest-data.csv?op=CREATE&user.name=mhausenblas2 HTTP/1.1
+	> User-Agent: curl/7.24.0 (x86_64-apple-darwin12.0) libcurl/7.24.0 OpenSSL/0.9.8x zlib/1.2.5
+	> Host: 10.196.2.36:50075
+	> Accept: */*
+	> Content-Length: 52
+	> Expect: 100-continue
+	>
+	< HTTP/1.1 100 Continue
+	* We are completely uploaded and fine
+	< HTTP/1.1 201 Created
+	< Content-Type: application/octet-stream
+	< Location: webhdfs://0.0.0.0:50070/michael/rest-data.csv
+	< Content-Length: 0
+	< Server: Jetty(6.1.26)
+	<
+	* Connection #0 to host 10.196.2.36 left intact
+	* Closing connection #0
+
+Note I had to append `user.name=mhausenblas2` in the request URL. This is 
+necessary due to the fact that in the absence of any authentication
+mechanism (such as Kerberos), the default user privileges on HDFS are 
+mirrored from the local user. 
+
+And just to confirm that the operation actually was successful let's use the
+CLI to verify this:
+
+	$ hadoop fs -ls /michael
+	Found 2 items
+	-rw-r--r--   1 mhausenblas2 supergroup         52 2013-06-17 13:29 /michael/cli-data.csv
+	-rw-r--r--   1 mhausenblas2 supergroup         52 2013-06-17 13:50 /michael/rest-data.csv
 
 [documentation][HW] | [Stack Overflow][S2] | [example Python script][E1]
 
+----
 
 ## From dynamic sources
 Flume, Scribe, Kafka, MapR's NFS
@@ -75,15 +154,43 @@ distcp
 
 ## HDFS management
 
-Configuration
+The content of my `$HADOOP_HOME/conf/core-site.xml` for the operations 
+shown above was:
 
-	content of `core-site.xml` and `hdfs-site.xml` - TBD
+	<configuration>
+	 <property>
+	  <name>fs.default.name</name>
+	  <value>hdfs://localhost/</value>
+	 </property>
+	</configuration>
 
-To launch and shut down HDFS:
+The content of my `$HADOOP_HOME/conf/hdfs-site.xml` for the operations 
+shown above was:
 
-	`start-dfs.sh` and `stop-dfs.sh`
+	<configuration>
+	 <property>
+	  <name>dfs.name.dir</name>
+	  <value>/Users/mhausenblas2/opt/hadoop/name/</value>
+	 </property>
+	 <property>
+	  <name>dfs.data.dir</name>
+	  <value>/Users/mhausenblas2/opt/hadoop/data/</value>
+	 </property>
+	 <property>
+	  <name>dfs.replication</name>
+	  <value>1</value>
+	 </property>
+	 <property>
+	  <name>dfs.webhdfs.enabled</name>
+	  <value>true</value>
+	 </property>
+	</configuration>
 
-Check status with `jps`:
+Note that this puts HDFS into [pseudo-distributed mode][HP].
+
+To launch and shut down HDFS use `start-dfs.sh` and `stop-dfs.sh`
+
+To check the status of the HDFS daemons use `jps`:
 
 	$ `jps`
 	5166 Jps
@@ -91,15 +198,19 @@ Check status with `jps`:
 	5012 DataNode
 	4922 NameNode
 
-Logging:
+To view the relevant logs live, use `tail -f`:
 
 	tail -f /Users/mhausenblas2/bin/hadoop-1.0.4/logs/hadoop-mhausenblas2-namenode-Michaels-MacBook-Pro-2.local.log
 	tail -f /Users/mhausenblas2/bin/hadoop-1.0.4/logs/hadoop-mhausenblas2-datanode-Michaels-MacBook-Pro-2.local.log
 
+Some common HDFS commands used throughout: 
 
+	hadoop fs -ls /michael
+	
 
 [HC]:(http://hadoop.apache.org/docs/stable/file_system_shell.html#copyFromLocal) 
 [S1]:(http://stackoverflow.com/questions/14704633/moving-data-to-hdfs-using-copyfromlocal-switch)
 [HW]:(http://hadoop.apache.org/docs/stable/webhdfs.html) 
 [E1]:(http://randomlydistributed.blogspot.ie/2011/12/webhdfs-py-simple-lean-hdfs-python.html)
 [S2]:(http://stackoverflow.com/questions/11064229/hadoop-webhdfs-curl-create-file)
+[HP]:(http://hadoop.apache.org/docs/stable/single_node_setup.html#PseudoDistributed)
