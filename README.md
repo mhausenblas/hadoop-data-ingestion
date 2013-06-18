@@ -252,11 +252,18 @@ See also (Sqoop connectors/plug-ins):
 * Quest (R) [Data Connector for Oracle and Hadoop](https://github.com/QuestSoftwareTCD/OracleSQOOPconnector)
 
 [documentation](http://sqoop.apache.org/docs/1.4.3/index.html) | 
-[Apache blog post](https://blogs.apache.org/sqoop/entry/apache_sqoop_overview) |
+[Apache blog post](https://blogs.apache.org/sqoop/entry/apache_sqoop_overview)
 
 
 ## From HDFS
-distcp
+
+Sometimes, the data might originally reside in HDFS itself, for example, in case
+of copying data form an old cluster into a new cluster. So, if you want
+to ingest data from HDFS into HDFS, use `distcp`.
+
+[documentation](http://hadoop.apache.org/docs/stable/distcp.html) | 
+[Stack Overflow](http://stackoverflow.com/questions/15532575/does-hadoop-distcp-copy-replicas)
+
 
 
 ## HDFS management
@@ -323,4 +330,11 @@ Some common HDFS commands used throughout:
 * Initially, for a fresh install, run once `hadoop namenode -format`
 * To list the contents of an HDFS directory run	`hadoop fs -ls /michael`
 
+### Further Reading
 
+Useful resources such as tutorials, introductions, background and deep-dives on HDFS:
+
+* Yahoo! Developer Network (HTML) - [Module 2: The Hadoop Distributed File System](http://developer.yahoo.com/hadoop/tutorial/module2.html)
+* YouTube (video, 33min) - [Hadoop Tutorial: Intro to HDFS](http://youtu.be/ziqx2hJY8Hg)
+* Apache Hadoop (PDF) - [HDFS Architecture Guide](http://hadoop.apache.org/docs/stable/hdfs_design.pdf)
+* Usenix 2010 article by Konstantin V. Shvachko (PDF) - [HDFS scalability: the limits to growth](http://static.usenix.org/publications/login/2010-04/openpdfs/shvachko.pdf)
