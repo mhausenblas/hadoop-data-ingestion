@@ -31,19 +31,18 @@ The `sink` in the context of this note is any system that offers
 [HDFS](http://hadoop.apache.org/docs/stable/hdfs_design.html) 
 compatible access.
 
-**Table of Contents**
+## Table of Contents
 
-1. From [local filesystem](https://github.com/mhausenblas/hadoop-data-ingestion#from-local-filesystem)
- <span style="color:#c0c0c0">hadoop fs -copyFromLocal, WebHDFS API</span> 
-1. From [dynamic sources](https://github.com/mhausenblas/hadoop-data-ingestion#from-dynamic-sources)
- <span style="color:#c0c0c0">Flume, Scribe, Kafka, NFS</span> 
-1. From [relational databases](https://github.com/mhausenblas/hadoop-data-ingestion#from-relational-databases)
- <span style="color:#c0c0c0">Sqoop</span> 
-1. From [HDFS](https://github.com/mhausenblas/hadoop-data-ingestion#from-hdfs)
- <span style="color:#c0c0c0">Sqoop</span> 
-1. [HDFS management](https://github.com/mhausenblas/hadoop-data-ingestion#hdfs-management)
- <span style="color:#c0c0c0">config, logging, common commands</span> 
+###### From [local filesystem](https://github.com/mhausenblas/hadoop-data-ingestion#from-local-filesystem) -> `hadoop fs -copyFromLocal`, *WebHDFS API* 
 
+###### From [dynamic sources](https://github.com/mhausenblas/hadoop-data-ingestion#from-dynamic-sources) -> *Flume, Scribe, Kafka, NFS*
+
+###### From [relational databases](https://github.com/mhausenblas/hadoop-data-ingestion#from-relational-databases) -> *Sqoop*
+
+######  From [HDFS](https://github.com/mhausenblas/hadoop-data-ingestion#from-hdfs) -> `distcp` 
+
+###### [HDFS management](https://github.com/mhausenblas/hadoop-data-ingestion#hdfs-management)
+ 
 
 ----
 
