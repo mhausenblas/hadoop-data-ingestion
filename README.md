@@ -238,7 +238,22 @@ From the homepage:
 ----
 
 ## From relational databases
-Sqoop
+
+### Apache Sqoop
+
+From the homepage:
+
+> Apache Sqoop is a tool designed for efficiently transferring bulk data 
+> between Apache Hadoop and structured datastores such as relational databases.
+
+See also (Sqoop connectors/plug-ins):
+
+* Oracle's [MySQL Applier](https://blogs.oracle.com/MySQL/entry/announcing_the_mysql_hadoop_applier) for Apache Hadoop
+* Quest (R) [Data Connector for Oracle and Hadoop](https://github.com/QuestSoftwareTCD/OracleSQOOPconnector)
+
+[documentation](http://sqoop.apache.org/docs/1.4.3/index.html) | 
+[Apache blog post](https://blogs.apache.org/sqoop/entry/apache_sqoop_overview) |
+
 
 ## From HDFS
 distcp
