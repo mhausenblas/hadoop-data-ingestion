@@ -34,11 +34,30 @@ compatible access.
 ## Table of Contents
 
 ###### 1. From [local filesystem](https://github.com/mhausenblas/hadoop-data-ingestion#from-local-filesystem)
+* Command Line Interface - `hadoop fs -copyFromLocal`
+* WebHDFS REST API
+* Network File System
+
 ###### 2. From [dynamic sources](https://github.com/mhausenblas/hadoop-data-ingestion#from-dynamic-sources)
+* Apache Flume
+* Apache Kafka
+* Facebook's Scribe
+
 ###### 3. From [relational databases](https://github.com/mhausenblas/hadoop-data-ingestion#from-relational-databases)
+* Apache Sqoop
+
 ###### 4. From [HDFS](https://github.com/mhausenblas/hadoop-data-ingestion#from-hdfs)
+* Command Line Interface - `distcp`
+
 ###### 5. [HDFS management](https://github.com/mhausenblas/hadoop-data-ingestion#hdfs-management)
+* Configuration
+* Common Commands
+* Further Reading
  
+
+
+
+
 
 ----
 
@@ -312,7 +331,7 @@ To launch and shut down HDFS use `start-dfs.sh` and `stop-dfs.sh`.
 To check the status of the HDFS daemons use `jps` (note: 
 [HotSpot](http://docs.oracle.com/javase/6/docs/technotes/tools/share/jps.html)-specific):
 
-	$ `jps`
+	$ jps
 	5166 Jps
 	5104 SecondaryNameNode
 	5012 DataNode
