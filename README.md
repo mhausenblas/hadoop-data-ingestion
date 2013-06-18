@@ -33,15 +33,15 @@ compatible access.
 
 ## Table of Contents
 
-###### From [local filesystem](https://github.com/mhausenblas/hadoop-data-ingestion#from-local-filesystem) -> `hadoop fs -copyFromLocal`, *WebHDFS API* 
+###### 1. From [local filesystem](https://github.com/mhausenblas/hadoop-data-ingestion#from-local-filesystem)—`hadoop fs -copyFromLocal`, *WebHDFS API* 
 
-###### From [dynamic sources](https://github.com/mhausenblas/hadoop-data-ingestion#from-dynamic-sources) -> *Flume, Scribe, Kafka, NFS*
+###### 2. From [dynamic sources](https://github.com/mhausenblas/hadoop-data-ingestion#from-dynamic-sources)—*Flume, Scribe, Kafka, NFS*
 
-###### From [relational databases](https://github.com/mhausenblas/hadoop-data-ingestion#from-relational-databases) -> *Sqoop*
+###### 3. From [relational databases](https://github.com/mhausenblas/hadoop-data-ingestion#from-relational-databases)—*Sqoop*
 
-######  From [HDFS](https://github.com/mhausenblas/hadoop-data-ingestion#from-hdfs) -> `distcp` 
+###### 4. From [HDFS](https://github.com/mhausenblas/hadoop-data-ingestion#from-hdfs)—`distcp` 
 
-###### [HDFS management](https://github.com/mhausenblas/hadoop-data-ingestion#hdfs-management)
+###### 5. [HDFS management](https://github.com/mhausenblas/hadoop-data-ingestion#hdfs-management)
  
 
 ----
