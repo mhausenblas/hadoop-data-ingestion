@@ -50,7 +50,8 @@ copy it to HDFS use `hadoop fs -copyFromLocal` like so:
 
 	$ hadoop fs -copyFromLocal data.csv hdfs://localhost/michael/cli-data.csv
 
-[documentation][HC] | [Stack Overflow][S1]
+[documentation](http://hadoop.apache.org/docs/stable/file_system_shell.html#copyFromLocal) | 
+[Stack Overflow](http://stackoverflow.com/questions/14704633/moving-data-to-hdfs-using-copyfromlocal-switch)
 
 ----
 
@@ -150,7 +151,9 @@ CLI to verify this:
 	-rw-r--r--   1 mhausenblas2 supergroup         52 2013-06-17 13:29 /michael/cli-data.csv
 	-rw-r--r--   1 mhausenblas2 supergroup         52 2013-06-17 13:50 /michael/rest-data.csv
 
-[documentation][HW] | [Stack Overflow][S2] | [example Python script][E1]
+[documentation](http://hadoop.apache.org/docs/stable/webhdfs.html)  | 
+[Stack Overflow](http://stackoverflow.com/questions/11064229/hadoop-webhdfs-curl-create-file) | 
+[example Python script](http://randomlydistributed.blogspot.ie/2011/12/webhdfs-py-simple-lean-hdfs-python.html)
 
 ----
 
@@ -180,7 +183,8 @@ From the homepage:
 > It is robust and fault tolerant with tunable reliability mechanisms and 
 > many failover and recovery mechanisms. 
 
-[documentation][HF] | [Dr. Dobbs article][A1]
+[documentation](http://flume.apache.org/FlumeUserGuide.html) | 
+[Dr. Dobbs article](http://www.drdobbs.com/database/acquiring-big-data-using-apache-flume/240155029)
 
 ----
 
@@ -200,7 +204,8 @@ From the homepage:
 >  (iv) support for parallel data load into Hadoop.
 
 
-[documentation][HK] | [MediaWiki infrastructure article][A2]
+[documentation](https://cwiki.apache.org/confluence/display/KAFKA/Operations) | 
+[MediaWiki infrastructure article](http://www.mediawiki.org/wiki/Analytics/Kraken/Request_Logging#Kafka)
 
 
 ----
@@ -213,7 +218,8 @@ From the homepage:
 > number of servers. It is designed to be scalable, extensible without client-side
 > modification, and robust to failure of the network or any specific machine.
 
-[documentation][GS] | [Stack Overflow][S3]
+[documentation](https://github.com/facebook/scribe/wiki) | 
+[Stack Overflow](http://stackoverflow.com/questions/2241247/logging-data-with-scribe)
 
 ----
 
@@ -262,7 +268,7 @@ shown above was:
 	 </property>
 	</configuration>
 
-Note that this puts HDFS into [pseudo-distributed mode][HP].
+Note that this puts HDFS into [pseudo-distributed mode](http://hadoop.apache.org/docs/stable/single_node_setup.html#PseudoDistributed).
 
 ### Common Commands
 
@@ -289,17 +295,5 @@ Some common HDFS commands used throughout:
 
 * Initially, for a fresh install, run once `hadoop namenode -format`
 * To list the contents of an HDFS directory run	`hadoop fs -ls /michael`
-	
 
-[HC]:(http://hadoop.apache.org/docs/stable/file_system_shell.html#copyFromLocal) 
-[S1]:(http://stackoverflow.com/questions/14704633/moving-data-to-hdfs-using-copyfromlocal-switch)
-[HW]:(http://hadoop.apache.org/docs/stable/webhdfs.html) 
-[E1]:(http://randomlydistributed.blogspot.ie/2011/12/webhdfs-py-simple-lean-hdfs-python.html)
-[S2]:(http://stackoverflow.com/questions/11064229/hadoop-webhdfs-curl-create-file)
-[HP]:(http://hadoop.apache.org/docs/stable/single_node_setup.html#PseudoDistributed)
-[HF]:(http://flume.apache.org/FlumeUserGuide.html)
-[A1]:(http://www.drdobbs.com/database/acquiring-big-data-using-apache-flume/240155029)
-[GS]:(https://github.com/facebook/scribe/wiki)
-[S3]:(http://stackoverflow.com/questions/2241247/logging-data-with-scribe)
-[HK]:(https://cwiki.apache.org/confluence/display/KAFKA/Operations)
-[A2]:(http://www.mediawiki.org/wiki/Analytics/Kraken/Request_Logging#Kafka)
+
