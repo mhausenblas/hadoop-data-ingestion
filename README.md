@@ -18,13 +18,13 @@ The `source` can take on different forms, including but not limited to the
 following:
 
 * A [CSV file](http://tools.ietf.org/html/rfc4180) in the local filesystem
-* One or more tables in a relational database such as PostgreSQL or MySQL
 * Some kind of [constraint device](http://www.internet-of-things.eu/) such as a 
 temperature sensor
 * Application log files, for example from a [Web 
 server](http://httpd.apache.org/docs/2.0/logs.html)
-* Social media stream such as the [Twitter 
+* Social media streams, such as the [Twitter 
 firehose](https://dev.twitter.com/docs/streaming-apis)
+* One or more tables in a relational database such as PostgreSQL or MySQL
 * The Hadoop filesystem HDFS
 
 The `sink` in the context of this note is any system that offers 
@@ -155,7 +155,69 @@ CLI to verify this:
 ----
 
 ## From dynamic sources
-Flume, Scribe, Kafka, MapR's NFS
+
+If you're dealing with data from dynamic sources such as:
+
+* **constraint devices** in the [IoT](http://www.internet-of-things.eu/), for example
+a temperature sensor, a light sensor, or a people counter,
+* data streams from **governmental agencies** on topics like traffic or
+[weather](http://data.gov.uk/dataset/metoffice_uklocs3hr_fc), 
+* **log files** that are continuously updated, such as [Web 
+server](http://httpd.apache.org/docs/2.0/logs.html) logs,
+* **social media streams**, like the [Twitter 
+firehose](https://dev.twitter.com/docs/streaming-apis) or Wikipedia edits via 
+[IRC](http://meta.wikimedia.org/wiki/IRC/Channels#Raw_feeds)
+
+then you have a number of options as listed below.
+
+### Apache Flume
+
+From the homepage:
+
+> Flume is a distributed, reliable, and available service for efficiently 
+> collecting, aggregating, and moving large amounts of log data. 
+> It has a simple and flexible architecture based on streaming data flows. 
+> It is robust and fault tolerant with tunable reliability mechanisms and 
+> many failover and recovery mechanisms. 
+
+[documentation][HF] | [Dr. Dobbs article][A1]
+
+----
+
+### Apache Kafka
+
+From the homepage:
+
+> Apache Kafka is a distributed pub-sub messaging system designed for throughput.
+> It is designed to support the following:
+>  (i) persistent messaging with O(1) disk structures that provide constant 
+>  time performance even with many TB of stored messages; 
+>  (ii) high-throughput: even with very modest hardware Kafka can support hundreds
+>  of thousands of messages per second; 
+>  (iii) explicit support for partitioning messages over Kafka servers and
+>  distributing consumption over a cluster of consumer machines while 
+>  maintaining per-partition ordering semantics; 
+>  (iv) support for parallel data load into Hadoop.
+
+
+[documentation][HK] | [MediaWiki infrastructure article][A2]
+
+
+----
+
+### Facebook's Scribe
+
+From the homepage:
+
+> Scribe is a server for aggregating log data streamed in real time from a large
+> number of servers. It is designed to be scalable, extensible without client-side
+> modification, and robust to failure of the network or any specific machine.
+
+[documentation][GS] | [Stack Overflow][S3]
+
+----
+
+### NFS
 
 ## From relational databases
 Sqoop
@@ -235,3 +297,9 @@ Some common HDFS commands used throughout:
 [E1]:(http://randomlydistributed.blogspot.ie/2011/12/webhdfs-py-simple-lean-hdfs-python.html)
 [S2]:(http://stackoverflow.com/questions/11064229/hadoop-webhdfs-curl-create-file)
 [HP]:(http://hadoop.apache.org/docs/stable/single_node_setup.html#PseudoDistributed)
+[HF]:(http://flume.apache.org/FlumeUserGuide.html)
+[A1]:(http://www.drdobbs.com/database/acquiring-big-data-using-apache-flume/240155029)
+[GS]:(https://github.com/facebook/scribe/wiki)
+[S3]:(http://stackoverflow.com/questions/2241247/logging-data-with-scribe)
+[HK]:(https://cwiki.apache.org/confluence/display/KAFKA/Operations)
+[A2]:(http://www.mediawiki.org/wiki/Analytics/Kraken/Request_Logging#Kafka)
