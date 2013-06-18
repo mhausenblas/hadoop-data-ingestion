@@ -53,9 +53,6 @@ compatible access.
 * Configuration
 * Common Commands
 * Further Reading
- 
-
-
 
 
 
@@ -87,7 +84,7 @@ First, if WebHDFS is not yet enabled, edit `hdfs_site.xml` to change this:
 	 <value>true</value>
 	</property>
 
-Then, you can use for example `curl` to interaction with the WebHDFS API from
+Then, you can use for example `curl` to interact with the WebHDFS API from
 the shell. Let's first check if the CSV file we've uploaded in the previous
 step using the CLI actually is available (the `-s` tells `curl` to be silent):
 	
