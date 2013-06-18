@@ -45,6 +45,8 @@ compatible access.
 
 ## From local filesystem
 
+### Command Line Interface (CLI)
+
 If you have a file, such as a CSV file, in your local filesystem and want to
 copy it to HDFS use `hadoop fs -copyFromLocal` like so:
 
@@ -55,9 +57,9 @@ copy it to HDFS use `hadoop fs -copyFromLocal` like so:
 
 ----
 
-If you prefer a RESTful interaction, there is the [WebHDFS REST API][HW]
-available. This API, available since Hadoop 0.20.205, must be enabled in 
-other to use it. 
+### WebHDFS REST API
+If you prefer a RESTful interaction, there is the WebHDFS REST API available.
+This API, available since Hadoop 0.20.205, must be enabled in other to use it. 
 
 First, if WebHDFS is not yet enabled, edit `hdfs_site.xml` to change this:
 
@@ -153,7 +155,19 @@ CLI to verify this:
 
 [documentation](http://hadoop.apache.org/docs/stable/webhdfs.html)  | 
 [Stack Overflow](http://stackoverflow.com/questions/11064229/hadoop-webhdfs-curl-create-file) | 
-[example Python script](http://randomlydistributed.blogspot.ie/2011/12/webhdfs-py-simple-lean-hdfs-python.html)
+[example - Python](http://randomlydistributed.blogspot.ie/2011/12/webhdfs-py-simple-lean-hdfs-python.html)
+
+----
+
+### Network File System (NFS)
+
+The [MapR Hadoop distribution](http://www.mapr.com/) lets you mount the
+Hadoop cluster itself via Network File System ([NFS](http://tools.ietf.org/html/rfc1813) v3),
+enabling your applications to directly write the data.
+
+
+[documentation](http://www.mapr.com/doc/display/MapR/Accessing+Data+with+NFS) |
+[example - Java](http://www.mapr.com/blog/leverage-existing-file-based-applications-with-hadoop)
 
 ----
 
@@ -222,8 +236,6 @@ From the homepage:
 [Stack Overflow](http://stackoverflow.com/questions/2241247/logging-data-with-scribe)
 
 ----
-
-### NFS
 
 ## From relational databases
 Sqoop
