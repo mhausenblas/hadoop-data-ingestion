@@ -254,6 +254,7 @@ See also (Sqoop connectors/plug-ins):
 [documentation](http://sqoop.apache.org/docs/1.4.3/index.html) | 
 [Apache blog post](https://blogs.apache.org/sqoop/entry/apache_sqoop_overview)
 
+----
 
 ## From HDFS
 
@@ -264,7 +265,7 @@ to ingest data from HDFS into HDFS, use `distcp`.
 [documentation](http://hadoop.apache.org/docs/stable/distcp.html) | 
 [Stack Overflow](http://stackoverflow.com/questions/15532575/does-hadoop-distcp-copy-replicas)
 
-
+----
 
 ## HDFS management
 
