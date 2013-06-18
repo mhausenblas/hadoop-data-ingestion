@@ -31,12 +31,29 @@ The `sink` in the context of this note is any system that offers
 [HDFS](http://hadoop.apache.org/docs/stable/hdfs_design.html) 
 compatible access.
 
-## From the local filesystem
+**Table of Contents**
+
+1. From [local filesystem](https://github.com/mhausenblas/hadoop-data-ingestion#from-local-filesystem)
+ <span style="color:#c0c0c0">hadoop fs -copyFromLocal, WebHDFS API</span> 
+1. From [dynamic sources](https://github.com/mhausenblas/hadoop-data-ingestion#from-dynamic-sources)
+ <span style="color:#c0c0c0">Flume, Scribe, Kafka, NFS</span> 
+1. From [relational databases](https://github.com/mhausenblas/hadoop-data-ingestion#from-relational-databases)
+ <span style="color:#c0c0c0">Sqoop</span> 
+1. From [HDFS](https://github.com/mhausenblas/hadoop-data-ingestion#from-hdfs)
+ <span style="color:#c0c0c0">Sqoop</span> 
+1. [HDFS management](https://github.com/mhausenblas/hadoop-data-ingestion#hdfs-management)
+ <span style="color:#c0c0c0">config, logging, common commands</span> 
+
+
+----
+
+
+## From local filesystem
 
 If you have a file, such as a CSV file, in your local filesystem and want to
 copy it to HDFS use `hadoop fs -copyFromLocal` like so:
 
-	$ hadoop fs -copyFromLocal /user/michael/data.csv /mhausenblas/cli-data.csv
+	$ hadoop fs -copyFromLocal data.csv hdfs://localhost/michael/cli-data.csv
 
 [documentation][HC] | [Stack Overflow][S1]
 
@@ -154,6 +171,8 @@ distcp
 
 ## HDFS management
 
+### Configuration
+
 The content of my `$HADOOP_HOME/conf/core-site.xml` for the operations 
 shown above was:
 
@@ -188,9 +207,12 @@ shown above was:
 
 Note that this puts HDFS into [pseudo-distributed mode][HP].
 
-To launch and shut down HDFS use `start-dfs.sh` and `stop-dfs.sh`
+### Common Commands
 
-To check the status of the HDFS daemons use `jps`:
+To launch and shut down HDFS use `start-dfs.sh` and `stop-dfs.sh`.
+
+To check the status of the HDFS daemons use `jps` (note: 
+[HotSpot](http://docs.oracle.com/javase/6/docs/technotes/tools/share/jps.html)-specific):
 
 	$ `jps`
 	5166 Jps
@@ -203,12 +225,13 @@ To view the relevant logs live, use `tail -f`:
 	tail -f /Users/mhausenblas2/bin/hadoop-1.0.4/logs/hadoop-mhausenblas2-namenode-Michaels-MacBook-Pro-2.local.log
 	tail -f /Users/mhausenblas2/bin/hadoop-1.0.4/logs/hadoop-mhausenblas2-datanode-Michaels-MacBook-Pro-2.local.log
 
-To view the status and health of the HDFS, point your browser to:
+To view the status and health of the HDFS, point your browser to
 [http://localhost:50070/dfshealth.jsp](http://localhost:50070/dfshealth.jsp)
 
 Some common HDFS commands used throughout: 
 
-	hadoop fs -ls /michael
+* Initially, for a fresh install, run once `hadoop namenode -format`
+* To list the contents of an HDFS directory run	`hadoop fs -ls /michael`
 	
 
 [HC]:(http://hadoop.apache.org/docs/stable/file_system_shell.html#copyFromLocal) 
